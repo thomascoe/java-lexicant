@@ -1,7 +1,7 @@
 Java-Lexicant
 =============
 
-1 player Lexicant coded in Java
+1 player Lexicant coded in Java. Co-authored by thomascoe and ChrisDeese
 
 How To Play
 =============
