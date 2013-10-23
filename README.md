@@ -1,8 +1,11 @@
-# Java-Lexicant
+# java-lexicant
 
 Single player Lexicant game coded in Java
 
 # How To Play
+java-lexicant is based off of the original Lexicant pencil and paper word game
+(http://en.wikipedia.org/wiki/Lexicant).
+
 The game will prompt you for a name and difficulty level. After that, the game
 begins with either you playing a letter or the computer playing a letter. The
 gameplay works by alternating between the player adding a letter and the
