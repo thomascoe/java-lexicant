@@ -21,6 +21,9 @@ In order to win the game, you must either make the computer play a word longer
 than 3 characters or bluff you by playing a letter that makes the current string
 not a string found in any valid word.
 
+## Example Gameplay
+![Screenshot](/images/screenshot.png?raw=true)
+
 # Contributors
   * [Thomas Coe](https://github.com/thomascoe)
   * [Chris Deese](https://github.com/ChrisDeese)
