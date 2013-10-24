@@ -22,11 +22,11 @@ public class Game {
      *                   can choose to build towards
      */
     static final String ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-    static String word;
-    static int difficulty = 10000000;
+    private static String word;
+    private static int difficulty = 10000000;
     private static String[] allwords;
     private static boolean player;
-    static ArrayList <String>wordchoice = new ArrayList<String>();
+    private static ArrayList<String> wordchoice = new ArrayList<String>();
 
     /**
      * Imports the freebsd2.txt wordlist and sets it as
@@ -53,9 +53,13 @@ public class Game {
         String name = input.next();
         System.out.println("Choose a difficulty (easy, medium, hard): ");
         String diff = input.next().toUpperCase();
-        if (diff.equals("EASY")) difficulty = 6;
-        else if (diff.equals("MEDIUM")) difficulty = 10;
-        else if (diff.equals("HARD")) difficulty = 10000000;
+        if (diff.equals("EASY")) {
+            difficulty = 6;
+        } else if (diff.equals("MEDIUM")) {
+            difficulty = 10;
+        } else if (diff.equals("HARD")) {
+            difficulty = 10000000;
+        }
         play(name);
     }
 
@@ -66,18 +70,18 @@ public class Game {
      * @return      A String array containing each word in the .txt file
      */
     public static String[] importWordList(String path) {
-        ArrayList <String>lines = new ArrayList<String>();
+        ArrayList<String> lines = new ArrayList<String>();
         try {
             Scanner file = new Scanner(new File(path));
             while (file.hasNextLine()) {
                 lines.add(file.nextLine().trim());
             }
         } catch (IOException e) {
-            System.err.println ("Unable to read from file, \"" + path + "\".");
+            System.err.println("Unable to read from file, \"" + path + "\".");
             System.exit(-1);
         }
         String[] list = new String[lines.size()];
-        for (int i=0; i<lines.size(); i++) {
+        for (int i = 0; i < lines.size(); i++) {
             list[i] = lines.get(i).toUpperCase();
         }
         return list;
@@ -94,23 +98,23 @@ public class Game {
      * If so, it runs the start() method.
      */
     public static void play(String name) {
-        if ( (int)( 2*Math.random() ) == 1){
+        if ((int) (2 * Math.random()) == 1) {
             player = false; //set computer as first player
-            word += "" + ALPHABET.charAt((int)(26*Math.random()));
+            word += "" + ALPHABET.charAt((int) (26 * Math.random()));
             System.out.println("COMPUTER: " + word);
-        } else {//have player input first character
+        } else { //have player input first character
             firstCharacter();
         }
 
-        while ( !isWholeWord() && isPartOfWord()) {
-            if (player == true) {
-                if (word.length()%2 == 0) {
+        while (!isWholeWord() && isPartOfWord()) {
+            if (player) {
+                if (word.length() % 2 == 0) {
                     playerPlay(name);
                 } else {
                     computerPlay();
                 }
             } else {
-                if (word.length()%2 == 0) {
+                if (word.length() % 2 == 0) {
                     computerPlay();
                 } else {
                     playerPlay(name);
@@ -118,9 +122,9 @@ public class Game {
             }
         }
 
-        if ( isWholeWord() ) {
-            if ( (player == true && word.length()%2 != 0)
-                    || (player == false && word.length()%2 == 0)) {
+        if (isWholeWord()) {
+            if ((player && word.length() % 2 != 0)
+                    || (!player && word.length() % 2 == 0)) {
                 System.out.println("You lose! Sorry, but " + word
                         + " is a word longer than 3 letters.");
             } else {
@@ -128,9 +132,9 @@ public class Game {
             }
         }
 
-        if ( !isPartOfWord() ) {
-            if ( (player == true && word.length()%2 != 0)
-                    || (player == false && word.length()%2 == 0)) {
+        if (!isPartOfWord()) {
+            if ((player && word.length() % 2 != 0)
+                    || (!player && word.length() % 2 == 0)) {
                 System.out.println("Oops! Looks like you're bluffing! No word "
                         + "exists that contains " + word + ".");
                 System.out.println("The words you could have guessed were: "
@@ -161,11 +165,10 @@ public class Game {
             System.out.println("Enter a letter: ");
             String newchar = input.next().toUpperCase();
             int newchar1 = newchar.charAt(0);
-            if (newchar.length()==1 && newchar1>64 && newchar1<91) {
+            if (newchar.length() == 1 && newchar1 > 64 && newchar1 < 91) {
                 word += newchar;
                 System.out.println(word);
-            }
-            else {
+            } else {
                 System.out.println("Error. You must input one letter.");
             }
         }
@@ -179,9 +182,9 @@ public class Game {
      *         full word.
      */
     public static boolean isWholeWord() {
-        if (word.length()>3) {
-            for (int i=0; i<allwords.length; i++) {
-                if ( word.equals(allwords[i]) ){
+        if (word.length() > 3) {
+            for (int i = 0; i < allwords.length; i++) {
+                if (word.equals(allwords[i])) {
                     return true;
                 }
             }
@@ -197,8 +200,8 @@ public class Game {
      *         word in the allwords array.
      */
     public static boolean isPartOfWord() {
-        for (int i=0; i<allwords.length; i++) {
-            if ( allwords[i].contains(word) ) {
+        for (int i = 0; i < allwords.length; i++) {
+            if (allwords[i].contains(word)) {
                 return true;
             }
         }
@@ -215,11 +218,11 @@ public class Game {
      */
     public static void playerPlay(String name) {
         int length = word.length();
-        while ( length == word.length() ) {
+        while (length == word.length()) {
             Scanner input = new Scanner(System.in);
             System.out.println(name + ", add a letter: ");
             String newinput = input.next().toUpperCase();
-            if ( validInput(newinput) ){
+            if (validInput(newinput)) {
                 System.out.println(name + ": " + word);
             } else {
             System.out.println("Error. You must only add one letter to either"
@@ -244,34 +247,33 @@ public class Game {
      */
     public static void computerPlay() {
         wordchoice = new ArrayList<String>();
-        for (int i=0; i<allwords.length; i++) {
+        for (int i = 0; i < allwords.length; i++) {
             if (allwords[i].contains(word)) {
                 wordchoice.add(allwords[i]);
             }
         }
-        int computerrand = (int)(Math.random()*difficulty);
+        int computerrand = (int) (Math.random() * difficulty);
         if (computerrand > 0) {
-            int random = (int)( Math.random()*( wordchoice.size() ) );
+            int random = (int) (Math.random() * wordchoice.size());
             String nextguess = wordchoice.get(random);
-            ArrayList <String>possibleguesses = new ArrayList<String>();
+            ArrayList<String> possibleguesses = new ArrayList<String>();
             int loc = nextguess.indexOf(word);
-
-            if (loc>0) {
-                possibleguesses.add(nextguess.charAt(loc-1)+word);
+            if (loc > 0) {
+                possibleguesses.add(nextguess.charAt(loc - 1) + word);
             }
             if (nextguess.length() > loc + word.length()) {
-                possibleguesses.add(word + nextguess.charAt(loc+word.length()));
+                possibleguesses.add(word
+                        + nextguess.charAt(loc + word.length()));
             }
-
-            int randguess = (int)(Math.random()*( possibleguesses.size() ));
+            int randguess = (int) (Math.random() * possibleguesses.size());
             word = possibleguesses.get(randguess);
             System.out.println("COMPUTER: " + word);
         } else {
-            word += "" + ALPHABET.charAt((int)(26*Math.random()));
+            word += "" + ALPHABET.charAt((int) (26 * Math.random()));
             System.out.println("COMPUTER: " + word);
         }
         wordchoice = new ArrayList<String>();
-        for (int i=0; i<allwords.length; i++) {
+        for (int i = 0; i < allwords.length; i++) {
             if (allwords[i].contains(word)) {
                 wordchoice.add(allwords[i]);
             }
@@ -288,12 +290,12 @@ public class Game {
      * @return      True if the input is valid, false if the input is not valid
      */
     public static boolean validInput(String input) {
-        if (input.length()-1 != word.length()) {
+        if (input.length() - 1 != word.length()) {
             return false;
         } else if (input.indexOf(word) == -1) {
             return false;
         }
-        for (int i=0; i<input.length(); i++) {
+        for (int i = 0; i < input.length(); i++) {
             if (input.charAt(i) > 90 || input.charAt(i) < 65) {
                 return false;
             }
